@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormGroup, FormControl, Validators, EmailValidator } from '@angular/forms';
+import { Router } from '@angular/router';
+
+export class Login{
+  username: string;
+  passwrod: string;
+}
+
 
 @Component({
   selector: 'app-login',
@@ -9,17 +16,45 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+    username: new FormControl('',Validators.required),
+    password: new FormControl('', Validators.required)
   });
 
-
-
-
-
-  constructor() { }
+  login = new Login();
+  submit = false;
+  
+  constructor(
+    private router : Router
+  ) { }
 
   ngOnInit() {
   }
+
+  onSubmit(){
+    if(this.loginForm.valid){
+      this.submit = true;
+      this.login.username = this.loginForm.get('username').value;
+      this.login.passwrod = this.loginForm.get('password').value;
+      if(!this.checkValidUser()){
+      this.loginForm.setErrors({ 'invalid': true });        
+      }else{
+        localStorage.setItem('is-login','true');
+        this.router.navigateByUrl("/deshboard");
+      }
+    }
+  }
+
+  getFormControl(name) {
+    return this.loginForm.get(name);
+}
+
+checkValidUser(){
+  if(this.login != null){
+    if(this.login.username === 'abhishek' && this.login.passwrod === 'kashyap'){
+      return true;
+    }
+  }
+  return false;
+}
 
 }
