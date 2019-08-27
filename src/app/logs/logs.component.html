@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -27,14 +27,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                            <tr *ngFor="let log of logs">
+                                <th scope="row">{{log.id}}</th>
+                                <td >{{log.Date}}</td>
+                                <td>{{log.Thread}}</td>
+                                <td>{{log.Level}}</td>
+                                <td (dblclick)="showModel(log.Logger,'Logger')">{{log.Logger}}</td>
+                                <td (dblclick)="showModel(log.Message,'Message')">{{log.Message | slice:0:50}}</td>
+                                <td (dblclick)="showModel(log.Exception,'Exception')">{{log.Exception| slice:0:20}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -43,20 +43,14 @@
                 <div class="card-footer">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            <li class="page-item">
+                                <a class="page-link" (click)="getIndex(0)" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item" *ngFor="let i of indexList">
+                                <a class="page-link" (click)="getIndex(i)">{{i}}</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                                <a class="page-link" (click)="getIndex(-1)">Next</a>
                             </li>
                         </ul>
                     </nav>
@@ -65,3 +59,30 @@
         </div>
     </div>
 </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="message">
+          {{logMessage}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
