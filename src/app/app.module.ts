@@ -8,13 +8,15 @@ import { DeshboardComponent } from './deshboard/deshboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LogsComponent } from './logs/logs.component';
 import { LoginComponent } from './login/login.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DeshboardComponent,
     LogsComponent,
-    LoginComponent
+    LoginComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,

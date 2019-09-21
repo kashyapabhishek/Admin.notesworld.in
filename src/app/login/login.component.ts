@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, EmailValidator } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { LoginService, returnAccess } from '../login.service';
 export class Login{
   username: string;
   passwrod: string;
@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
   submit = false;
   
   constructor(
-    private router : Router
+    private router : Router,
+    private loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
       if(!this.checkValidUser()){
       this.loginForm.setErrors({ 'invalid': true });        
       }else{
+        this.loginService.getToken(this.login.username, this.login.passwrod).subscribe(a=> console.log(a));
         localStorage.setItem('is-login','true');
         this.router.navigateByUrl("/deshboard");
       }
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
 
 checkValidUser(){
   if(this.login != null){
-    if(this.login.username === 'abhishek' && this.login.passwrod === 'kashyap'){
+    if(this.login.username === 'kashyap@gmail.com' && this.login.passwrod === 'Login@123'){
       return true;
     }
   }

@@ -14,7 +14,7 @@ export class LogServiceService {
   ) { }
   
   private baseURL = 'http://localhost:52349/api/values';
-
+  private _baseURL = 'https://api.notesworld.in/api.values';
   public getLogs(): Observable<Logs[]>{
     return this._http.get<Logs[]>(this.baseURL);
   }
