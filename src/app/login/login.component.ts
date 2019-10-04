@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, EmailValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService, returnAccess } from '../login.service';
+import {HttpErrorResponse} from '@angular/common/http';
 export class Login{
   username: string;
   passwrod: string;
@@ -36,13 +37,30 @@ export class LoginComponent implements OnInit {
       this.submit = true;
       this.login.username = this.loginForm.get('username').value;
       this.login.passwrod = this.loginForm.get('password').value;
-      if(!this.checkValidUser()){
-      this.loginForm.setErrors({ 'invalid': true });        
-      }else{
-        this.loginService.getToken(this.login.username, this.login.passwrod).subscribe(a=> console.log(a));
+      this.loginService.getToken(this.login.username, this.login.passwrod).subscribe(a=> {
+        localStorage.setItem("token", a["access_token"]);
+        console.log(a["access_token"]);
         localStorage.setItem('is-login','true');
-        this.router.navigateByUrl("/deshboard");
-      }
+        if(a.userName=='Saller'){
+          this.router.navigateByUrl("/saller");
+        }
+        else{
+          this.router.navigateByUrl("/deshboard");
+        }
+
+      },
+      (error:HttpErrorResponse) => {
+        this.loginForm.setErrors({ 'invalid': true });
+        console.log(error.error);
+    });
+      
+      // if(!this.checkValidUser()){
+      // this.loginForm.setErrors({ 'invalid': true });        
+      // }else{
+      //   this.loginService.getToken(this.login.username, this.login.passwrod).subscribe(a=> console.log(a));
+      //   localStorage.setItem('is-login','true');
+      //   this.router.navigateByUrl("/deshboard");
+      // }
     }
   }
 
@@ -52,7 +70,7 @@ export class LoginComponent implements OnInit {
 
 checkValidUser(){
   if(this.login != null){
-    if(this.login.username === 'kashyap@gmail.com' && this.login.passwrod === 'Login@123'){
+    if(this.login.username === 'kashyap638@gmail.com' && this.login.passwrod === 'Login@123'){
       return true;
     }
   }

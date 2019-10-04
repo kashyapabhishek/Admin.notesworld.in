@@ -5,11 +5,13 @@ import {LogsComponent} from './logs/logs.component';
 import {LoginComponent} from './login/login.component';
 import { OrdersComponent } from './orders/orders.component';
 
-const routes: Routes = [
+import { from } from 'rxjs';
+const routes:  Routes = [
   { path: 'deshboard', component: DeshboardComponent },
   { path: 'logs', component: LogsComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'orders', component: OrdersComponent}
+  { path: '', component: LoginComponent},
+  { path: 'orders', component: OrdersComponent},
+  { path: 'saller', loadChildren: () => import('./saller/saller.module').then(m => m.SallerModule) }
 ];
 
 

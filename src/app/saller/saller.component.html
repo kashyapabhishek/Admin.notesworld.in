@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action active">
+                  Cras justo odio
+                </button>
+                <button type="button" class="list-group-item list-group-item-action" *ngFor="let order of _OrdersForSaller">
+                    <div class="row" [routerLink]="['/saller/Content', order.ORDERID]" >
+                        <div class="col-md-7">
+                                {{order.ORDERID |uppercase}}
+                        </div>
+                        <div class="col-md-5">
+                                {{order.TXNDATE | date }}
+                        </div>
+                    </div>
+                </button>
+                
+              </div>
+        </div>
+        <div class="col-md-8">
+                <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

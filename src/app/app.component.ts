@@ -14,17 +14,18 @@ export class AppComponent {
     private router: Router
   ) { }
   ngOnInit() {
-    if (localStorage.getItem('is-login') === 'true') {
-      this.loginButtonValue = 'Logout';
-      this.router.navigateByUrl("/deshboard");
-    }else{
-      this.router.navigateByUrl("/login");
-    }
+    // if (localStorage.getItem('is-login') === 'true') {
+    //   this.loginButtonValue = 'Logout';
+    //   this.router.navigateByUrl("/deshboard");
+    // }else{
+    //   this.router.navigateByUrl("/login");
+    // }
   }
 
   logout(){
     localStorage.removeItem('is-login');
     this.loginButtonValue = "Login";
+    this.router.navigateByUrl("/login");
     this.ngOnInit();
   }
 }

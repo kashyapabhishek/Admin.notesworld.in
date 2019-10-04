@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { LogsComponent } from './logs/logs.component';
 import { LoginComponent } from './login/login.component';
 import { OrdersComponent } from './orders/orders.component';
+// import { SallerComponent } from './saller/saller.component';
+// import { ContentComponent } from './saller/content/content.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { OrdersComponent } from './orders/orders.component';
     DeshboardComponent,
     LogsComponent,
     LoginComponent,
-    OrdersComponent
+    OrdersComponent,
+    // SallerComponent,
+    // ContentComponent
   ],
   imports: [
     BrowserModule,

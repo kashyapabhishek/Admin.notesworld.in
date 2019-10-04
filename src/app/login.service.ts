@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 
+
 const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
+    headers: new HttpHeaders({
+      'Accept': 'application/json',   'Content-Type': 'application/x-www-form-urlencoded',
+      
   })
+
 };
 
 export class loginmodel{
@@ -28,19 +30,20 @@ export class returnAccess{
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
 
   constructor(private _http: HttpClient) { }
 
-  private baseURL = 'http://localhost:52349/token';
+  private baseURL = 'https://api.notesworld.in/token';
 
-  getToken(username, password): Observable<returnAccess>{
-   let loginmodel_ = new loginmodel();
-   loginmodel_.username = username;
-   loginmodel_.password = password;
-   loginmodel_.grant_type = "password";
-    return this._http.post<returnAccess>(this.baseURL,loginmodel_).pipe();
+  getToken1(username, password): Observable<returnAccess>{
+   var data = "?username="+username+"&password="+password;
+    return this._http.get<returnAccess>(this.baseURL+data).pipe();
   }
 
-
+  getToken(username, password): Observable<returnAccess>{
+    var data = "username="+username+"&password="+password+"&grant_type=password";
+     return this._http.post<returnAccess>(this.baseURL,data,httpOptions).pipe();
+   }
 }
